@@ -54,7 +54,7 @@ class Patient(db.Model):
     disease = db.Column(db.String(100), nullable=False)
     checked_in = db.Column(db.Date, default=False)
     medical_history = db.Column(db.Text, nullable=True)
-    schedules = db.relationship('PatientSchedule', backref='patient', lazy=True)
+    schedules = db.relationship('PatientSchedule', backref='patients', lazy=True)
 
 class DoctorSchedule(db.Model):
     __tablename__ = 'doctor_schedule'
@@ -71,6 +71,8 @@ class PatientSchedule(db.Model):
     appointment_day = db.Column(db.Date, nullable=False)
     appointment_time = db.Column(db.Time, nullable=False)
     doctor_id = db.Column(db.Integer, db.ForeignKey('doctors.id'), nullable=False)
+    doctor = db.relationship('Doctor', backref='patient_schedule', lazy=True)
+    patient = db.relationship('Patient', backref='schedule', lazy=True)
 
 
 
@@ -319,8 +321,8 @@ def schedule():
     doctors = Doctor.query.all()
     patients = Patient.query.all()
     doctor_schedules = DoctorSchedule.query.all()
-    patient_schedules = PatientSchedule.query.all()
-    return render_template('schedule.html', doctors=doctors, patients=patients, doctor_schedules=doctor_schedules, patient_schedules=patient_schedules)
+    patient_schedules = db.session.query(PatientSchedule, Doctor).join(Doctor,PatientSchedule.doctor_id == Doctor.id).all()
+    return render_template('schedule.html', doctors=doctors, patients=patients, patient_schedules=patient_schedules, doctor_schedules=doctor_schedules)
 
 @app.route('/add_doctor_schedule', methods=['POST'])
 def add_doctor_schedule():

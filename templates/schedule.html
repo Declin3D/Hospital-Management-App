@@ -93,14 +93,16 @@
                         <th>Patient</th>
                         <th>Appointment Day</th>
                         <th>Appointment Time</th>
+                        <th>Doctor Attending</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for schedule in patient_schedules %}
+                {% for schedule, doctor in patient_schedules %}
                     <tr>
-                        <td>{{ schedule.patient_name }}</td>
-                        <td>{{ schedule.appointment_date }}</td>
-                        <td>{{ schedule.appointment_reason }}</td>
+                        <td>{{ schedule.patient.first_name }} {{ schedule.patient.last_name }}</td>
+                        <td>{{ schedule.appointment_day }}</td>
+                        <td>{{ schedule.appointment_time }}</td>
+                        <td>{{ doctor.first_name }} {{ doctor.last_name }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
