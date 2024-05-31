@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <ul>
+                <li><a href="{{ url_for('dashboard') }}" class="tab-link">Dashboard</a></li>
+                <li><a href="{{ url_for('patients') }}" class="tab-link">Patients</a></li>
+                <li><a href="{{ url_for('doctors') }}" class="tab-link">Doctors</a></li>
+                <li><a href="{{ url_for('staff') }}" class="tab-link">Staff</a></li>
+                <li><a href="{{ url_for('hire') }}" class="tab-link">Hire</a></li>
+                <li><a href="{{ url_for('schedule') }}" class="tab-link">Schedule</a></li>
+                <li><a href="{{ url_for('resources') }}" class="tab-link">Resources</a></li>
+                <li><a href="{{ url_for('finances') }}" class="tab-link">Finances</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+        <h1>Hospital Management</h1>
+        <div class="tabs">
+            <button class="tablink" onclick="openTab(event, 'Resources')">Resources</button>
+            <button class="tablink" onclick="openTab(event, 'Finances')">Finances</button>
+        </div>
+
+        <div id="Resources" class="tabcontent">
+            <h2>Resources Management</h2>
+            <form action="{{ url_for('add_resource') }}" method="POST">
+                <label for="resource_name">Resource Name:</label>
+                <input type="text" id="resource_name" name="resource_name" required>
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" name="quantity" required>
+                <label for="threshold">Threshold:</label>
+                <input type="number" id="threshold" name="threshold" required>
+                <button type="submit">Add Resource</button>
+            </form>
+            <h3>Resource Inventory</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Resource</th>
+                        <th>Quantity</th>
+                        <th>Threshold</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for resource in resources %}
+                    <tr>
+                        <td>{{ resource.name }}</td>
+                        <td>{{ resource.quantity }}</td>
+                        <td>{{ resource.threshold }}</td>
+                        <td>{% if resource.quantity < resource.threshold %}Low{% else %}Sufficient{% endif %}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div id="Finances" class="tabcontent">
+            <h2>Finances Management</h2>
+            <form action="{{ url_for('add_transaction') }}" method="POST">
+                <label for="description">Description:</label>
+                <input type="text" id="description" name="description" required>
+                <label for="amount">Amount:</label>
+                <input type="number" id="amount" name="amount" step="0.01" required>
+                <label for="transaction_type">Type:</label>
+                <select id="transaction_type" name="transaction_type" required>
+                    <option value="income">Income</option>
+                    <option value="expense">Expense</option>
+                </select>
+                <label for="transaction_date">Date:</label>
+                <input type="date" id="transaction_date" name="transaction_date" required>
+                <button type="submit">Add Transaction</button>
+            </form>
+            <h3>Financial Summary</h3>
+            <div>
+                <canvas id="financialChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablink");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            openTab(event, 'Resources');  // Default tab to open
+        });
+    </script>
+</body>
+</html>

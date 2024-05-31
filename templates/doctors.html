@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctors</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <ul>
+                <li><a href="{{ url_for('dashboard') }}" class="tab-link">Dashboard</a></li>
+                <li><a href="{{ url_for('patients') }}" class="tab-link">Patients</a></li>
+                <li><a href="{{ url_for('doctors') }}" class="tab-link active">Doctors</a></li>
+                <li><a href="{{ url_for('staff') }}" class="tab-link">Staff</a></li>
+                <li><a href="{{ url_for('hire') }}" class="tab-link">Hire</a></li>
+                <li><a href="{{ url_for('schedule') }}" class="tab-link">Schedule</a></li>
+                <li><a href="{{ url_for('resources') }}" class="tab-link">Resources</a></li>
+                <li><a href="{{ url_for('finances') }}" class="tab-link">Finances</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+        <div class="content">
+            <div id="doctors" class="tab-content active">
+                <h2>Doctors</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Specialization</th>
+                            <th>Pay</th>
+                            <th>Position</th>
+                            <th>Patients Served</th>
+                            <th>Success Rate</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for doctor in doctors %}
+                        <tr>
+                            <td>{{ doctor.first_name }}</td>
+                            <td>{{ doctor.last_name }}</td>
+                            <td>{{ doctor.specialization }}</td>
+                            <td>{{ doctor.pay }}</td>
+                            <td>{{ doctor.position }}</td>
+                            <td>{{ doctor.patients_served }}</td>
+                            <td>{{ doctor.success_rate }}</td>
+                            <td>
+                                <a href="{{ url_for('promote_doctor', doctor_id=doctor.id) }}"><button type="submit">Promote</button></a>
+                                <a href="{{ url_for('fire_doctor', doctor_id=doctor.id) }}"><button type="submit">Fire</button></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>

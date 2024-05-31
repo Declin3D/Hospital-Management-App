@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <ul>
+                <li><a href="{{ url_for('dashboard') }}" class="tab-link">Dashboard</a></li>
+                <li><a href="{{ url_for('patients') }}" class="tab-link">Patients</a></li>
+                <li><a href="{{ url_for('doctors') }}" class="tab-link">Doctors</a></li>
+                <li><a href="{{ url_for('staff') }}" class="tab-link">Staff</a></li>
+                <li><a href="{{ url_for('hire') }}" class="tab-link">Hire</a></li>
+                <li><a href="{{ url_for('schedule') }}" class="tab-link">Schedule</a></li>
+                <li><a href="{{ url_for('resources') }}" class="tab-link active">Resources</a></li>
+                <li><a href="{{ url_for('finances') }}" class="tab-link">Finances</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+        <div class="main-content">
+        <h1>Resources Management</h1>
+        <form action="{{ url_for('resources') }}" method="POST" class="form-section">
+            <label for="resource_name">Resource Name:</label>
+            <input type="text" name="resource_name" id="resource_name" required>
+            <label for="quantity">Quantity:</label>
+            <input type="number" name="quantity" id="quantity" required>
+            <label for="threshold">Threshold:</label>
+            <input type="number" name="threshold" id="threshold" required>
+            <label for="price">Price:</label>
+            <input type="number" name="price" id="price" required>
+            <button type="submit">Add Resource</button>
+        </form>
+
+        <h2>Existing Resources</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Threshold</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for resource in resources %}
+                <tr>
+                    <td>{{ resource.name }}</td>
+                    <td>{{ resource.quantity }}</td>
+                    <td>{{ resource.threshold }}</td>
+                    <td>${{ resource.price }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    </div>
+</body>
+</html>

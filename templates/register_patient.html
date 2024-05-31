@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Patient</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <ul>
+                <li><a href="{{ url_for('dashboard') }}" class="tab-link">Dashboard</a></li>
+                <li><a href="{{ url_for('patients') }}" class="tab-link">Patients</a></li>
+                <li><a href="{{ url_for('doctors') }}" class="tab-link">Doctors</a></li>
+                <li><a href="{{ url_for('staff') }}" class="tab-link">Staff</a></li>
+                <li><a href="{{ url_for('hire') }}" class="tab-link">Hire</a></li>
+                <li><a href="{{ url_for('schedule') }}" class="tab-link">Schedule</a></li>
+                <li><a href="{{ url_for('resources') }}" class="tab-link">Resources</a></li>
+                <li><a href="{{ url_for('finances') }}" class="tab-link">Finances</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+    
+    <div class="main-content">
+    <h1>Register New Patient</h1>
+    <form action="{{ url_for('register_patient') }}" method="POST">
+        <label for="first_name">First Name:</label>
+        <input type="text" id="first_name" name="first_name" required><br><br>
+
+        <label for="last_name">Last Name:</label>
+        <input type="text" id="last_name" name="last_name" required><br><br>
+
+        <label for="disease">Disease:</label>
+        <input type="text" id="disease" name="disease" required><br><br>
+
+        <label for="medical_history">Medical History:</label>
+        <input type="text" id="medical_history" name="medical_history" required><br><br>
+
+
+        <button type="submit">Register</button>
+    </form>
+    </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hire Doctors</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <ul>
+                <li><a href="{{ url_for('dashboard') }}" class="tab-link">Dashboard</a></li>
+                <li><a href="{{ url_for('patients') }}" class="tab-link">Patients</a></li>
+                <li><a href="{{ url_for('doctors') }}" class="tab-link">Doctors</a></li>
+                <li><a href="{{ url_for('staff') }}" class="tab-link">Staff</a></li>
+                <li><a href="{{ url_for('hire') }}" class="tab-link active">Hire</a></li>
+                <li><a href="{{ url_for('schedule') }}" class="tab-link">Schedule</a></li>
+                <li><a href="{{ url_for('resources') }}" class="tab-link">Resources</a></li>
+                <li><a href="{{ url_for('finances') }}" class="tab-link">Finances</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <h2>Hire Doctors</h2>
+            <table class="doctors-table">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Specialization</th>
+                        <th>Position</th>
+                        <th>Expected Pay</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for doctor in doctors_info %}
+                <tr>
+                    <td>{{ doctor.first_name }}</td>
+                    <td>{{ doctor.last_name }}</td>
+                    <td>{{ doctor.specialization }}</td>
+                    <td>{{ doctor.position }}</td>
+                    <td>{{ doctor.pay }}</td>
+                    <td>
+                        <form method="post" action="{{ url_for('hire') }}" id="hire">
+                            <input type="hidden" name="first_name" value="{{ doctor.first_name }}">
+                            <input type="hidden" name="last_name" value="{{ doctor.last_name }}">
+                            <input type="hidden" name="specialization" value="{{ doctor.specialization }}">
+                            <input type="hidden" name="position" value="{{ doctor.position }}">
+                            <input type="hidden" name="pay" value="{{ doctor.pay }}">
+                            <button type="submit">Hire</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

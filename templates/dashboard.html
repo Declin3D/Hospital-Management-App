@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="icon" type="icon" href="../IMG/icons8-hospital-32.png">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <ul>
+                <li><a href="{{ url_for('dashboard') }}" class="tab-link">Dashboard</a></li>
+                <li><a href="{{ url_for('patients') }}" class="tab-link">Patients</a></li>
+                <li><a href="{{ url_for('doctors') }}" class="tab-link">Doctors</a></li>
+                <li><a href="{{ url_for('staff') }}" class="tab-link">Staff</a></li>
+                <li><a href="{{ url_for('hire') }}" class="tab-link">Hire</a></li>
+                <li><a href="{{ url_for('schedule') }}" class="tab-link">Schedule</a></li>
+                <li><a href="{{ url_for('resources') }}" class="tab-link">Resources</a></li>
+                <li><a href="{{ url_for('finances') }}" class="tab-link">Finances</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+    
+    <div class="main-content">
+    <h1>Dashboard</h1>
+    
+        <div class="stats-container">
+            <div class="stat-box">
+                <h2>Patients</h2>
+                <p>{{ num_patients }}</p>
+            </div>
+            <div class="stat-box">
+                <h2>Doctors</h2>
+                <p>{{ num_doctors }}</p>
+            </div>
+            <div class="stat-box">
+                <h2>Staff Members</h2>
+                <p>{{ num_staff }}</p>
+            </div>
+        </div>
+        <div class="quick-actions">
+            <h2>Quick Actions</h2>
+            <ul>
+                <li><a href="{{ url_for('register_patient') }}">Register New Patient</a></li>
+                <li><a href="{{ url_for('patients') }}">Show Patients</a></li>
+                <li><a href="{{ url_for('doctors') }}">Show Doctor</a></li>
+                <li><a href="{{ url_for('set_budget') }}">Set Monthly Budget</a></li>
+            </ul>
+        </div>
+        <div class="recent-activities">
+            <h2>Recent Activities</h2>
+            <ul>
+                {% for activity in recent_activities %}
+                    <li>{{ activity }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="upcoming-appointments">
+            <h2>Upcoming Patient Appointments</h2>
+            <ul>
+                {% for appointment in upcoming_appointments %}
+                    <li>{{ appointment.appointment_date }}: {{ appointment.patient.first_name }} {{ appointment.patient.last_name }} with Dr. {{ appointment.doctor.first_name }} {{ appointment.doctor.last_name }} - {{ appointment.reason }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="upcoming-shifts">
+            <h2>Upcoming Doctor Shifts</h2>
+            <ul>
+                {% for shift in upcoming_shifts %}
+                    <li>{{ shift.shift_start }} - {{ shift.shift_end }}: Dr. {{ shift.doctor.first_name }} {{ shift.doctor.last_name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    </div>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>

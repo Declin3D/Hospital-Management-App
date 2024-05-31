@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container" id="medical-history-div">
+        <div class="medical-history-content">
+            <h2>Medical History of {{ patient.first_name }} {{ patient.last_name }}</h2>
+            <p>{{ patient.medical_history }}</p>
+            <a class="back-link" href="{{ url_for('patients') }}">Back to Patients</a>
+        </div>
+    </div>
+</body>
+</html>

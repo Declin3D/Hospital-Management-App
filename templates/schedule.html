@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        
+            <nav class="sidebar">
+                <ul>
+                    <li><a href="{{ url_for('dashboard') }}" class="tab-link">Dashboard</a></li>
+                    <li><a href="{{ url_for('patients') }}" class="tab-link">Patients</a></li>
+                    <li><a href="{{ url_for('doctors') }}" class="tab-link">Doctors</a></li>
+                    <li><a href="{{ url_for('staff') }}" class="tab-link">Staff</a></li>
+                    <li><a href="{{ url_for('hire') }}" class="tab-link">Hire</a></li>
+                    <li><a href="{{ url_for('schedule') }}" class="tab-link active">Schedule</a></li>
+                    <li><a href="{{ url_for('resources') }}" class="tab-link">Resources</a></li>
+                    <li><a href="{{ url_for('finances') }}" class="tab-link">Finances</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                </ul>
+            </nav>
+        
+        <div class="main-content">
+            <h1>Schedule Management</h1>
+
+            <h2>Doctor Schedules</h2>
+            <form action="{{ url_for('add_doctor_schedule') }}" method="POST" class="form-section">
+                <label for="doctor_id">Doctor:</label>
+                <select name="doctor_id" id="doctor_id">
+                    {% for doctor in doctors %}
+                    <option value="{{ doctor.id }}">{{ doctor.first_name }} {{ doctor.last_name }}</option>
+                    {% endfor %}
+                </select>
+                <label for="work_day">Work Day:</label>
+                <input type="text" name="work_day" id="work_day" required>
+                <label for="start_time">Start Time:</label>
+                <input type="time" name="start_time" id="start_time" required>
+                <label for="end_time">End Time:</label>
+                <input type="time" name="end_time" id="end_time" required>
+                <button type="submit">Add Schedule</button>
+            </form>
+
+            <h2>Patient Appointments</h2>
+            <form action="{{ url_for('add_patient_schedule') }}" method="POST" class="form-section">
+                <label for="patient_id">Patient:</label>
+                <select name="patient_id" id="patient_id" required>
+                    {% for patient in patients %}
+                    <option value="{{ patient.id }}">{{ patient.first_name }} {{ patient.last_name }}</option>
+                    {% endfor %}
+                </select>
+                <label for="doctor_id">Doctor Attending:</label>
+                <select id="doctor_id" name="doctor_id" required>
+                    {% for doctor in doctors %}
+                        <option value="{{ doctor.id }}">{{ doctor.first_name }} {{ doctor.last_name }}</option>
+                    {% endfor %}
+                </select>
+                <label for="appointment_day">Appointment Day:</label>
+                <input type="date" name="appointment_day" id="appointment_day" required>
+                <label for="appointment_time">Appointment Time:</label>
+                <input type="time" name="appointment_time" id="appointment_time" required>
+                <button type="submit">Add Appointment</button>
+            </form>
+
+            <h2>Existing Doctor Schedules</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Doctor</th>
+                        <th>Work Day</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for schedule in doctor_schedules %}
+                    <tr>
+                        <td>{{ schedule.doctor.first_name }} {{ schedule.doctor.last_name }}</td>
+                        <td>{{ schedule.work_day }}</td>
+                        <td>{{ schedule.start_time }}</td>
+                        <td>{{ schedule.end_time }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <h2>Existing Patient Appointments</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Patient</th>
+                        <th>Appointment Day</th>
+                        <th>Appointment Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for schedule in patient_schedules %}
+                    <tr>
+                        <td>{{ schedule.patient_name }}</td>
+                        <td>{{ schedule.appointment_date }}</td>
+                        <td>{{ schedule.appointment_reason }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+
