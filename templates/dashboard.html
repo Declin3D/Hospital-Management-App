@@ -6,7 +6,9 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="icon" type="icon" href="../IMG/icons8-hospital-32.png">
-
+    <style>
+        
+    </style>
 </head>
 <body>
     <div class="container">
@@ -26,46 +28,64 @@
     
         <div class="main-content">
             <h1>Dashboard</h1>
+            <div id="dashboard">
             <div class="stats-container">
                 <div class="stat-box">
-                    <h2 style="color: black;">Patients</h2>
-                    <p>{{ num_patients }}</p>
+                    <h2>Patients</h2>
+                    <table class="table">
+                        <tr>
+                            <td style="text-align: center;">{{ num_patients }}</td>
+                        </tr>
+                    </table>
                 </div>
                 <div class="stat-box">
-                    <h2 style="color: black;">Doctors</h2>
-                    <p>{{ num_doctors }}</p>
+                    <h2>Doctors</h2>
+                    <table class="table">
+                        <tr>
+                            <td style="text-align: center;">{{ num_doctors }}</td>
+                        </tr>
+                    </table>
                 </div>
                 <div class="stat-box">
-                    <h2 style="color: black;">Staff Members</h2>
-                    <p>{{ num_staff }}</p>
+                    <h2>Staff Members</h2>
+                    <table class="table">
+                        <tr>
+                            <td style="text-align: center;">{{ num_staff }}</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
             <div class="quick-actions">
                 <h2>Quick Actions</h2>
-                <ul>
-                    <li><a href="{{ url_for('register_patient') }}">Register New Patient</a></li>
-                    <li><a href="{{ url_for('patients') }}">Show Patients</a></li>
-                    <li><a href="{{ url_for('doctors') }}">Show Doctor</a></li>
-                    <li><a href="{{ url_for('set_budget') }}">Set Monthly Budget</a></li>
+                <ul id="quick-list">
+                    <li><a href="{{ url_for('register_patient') }}"><button type="submit" style="width: 350px; font-size: 14pt;">New Patient</button></a></li>
+                    <li><a href="{{ url_for('patients') }}"><button type="submit" style="width: 350px; font-size: 14pt;">Show Patients</button></a></li>
+                    <li><a href="{{ url_for('doctors') }}"><button type="submit" style="width: 350px; font-size: 14pt;">Show Doctors</button></a></li>
+                    <li><a href="{{ url_for('set_budget') }}"><button type="submit" style="width: 350px; font-size: 14pt;">Set Monthly Budget</button></a></li>
                 </ul>
             </div>
             <div class="upcoming-appointments">
                 <h2>Upcoming Patient Appointments</h2>
-                <ul>
+                <table class="table" >
                     {% for appointment in upcoming_appointments %}
-                        <li>{{ appointment.appointment_date }}: {{ appointment.patient.first_name }} {{ appointment.patient.last_name }} with Dr. {{ appointment.doctor.first_name }} {{ appointment.doctor.last_name }} - {{ appointment.reason }}</li>
+                    <tr>
+                        <td style="text-align: center;">{{ appointment.appointment_day }}: {{ appointment.patient.first_name }} {{ appointment.patient.last_name }} with Dr. {{ appointment.doctor.first_name }} {{ appointment.doctor.last_name }}</td>
+                    </tr>
                     {% endfor %}
-                </ul>
+                </table>
             </div>
             <div class="upcoming-shifts">
                 <h2>Upcoming Doctor Shifts</h2>
-                <ul>
+                <table class="table" >
                     {% for shift in upcoming_shifts %}
-                        <li>{{ shift.start_time }} - {{ shift.end.time }}: Dr. {{ shift.doctor.first_name }} {{ shift.doctor.last_name }}</li>
+                    <tr>
+                        <td style="text-align: center;">{{ shift.start_time }} - {{ shift.end_time }} : Dr. {{ shift.doctor.first_name }} {{ shift.doctor.last_name }}</td>
+                    </tr>
                     {% endfor %}
-                </ul>
+                </table>
             </div>
         </div>
+    </div>
     </div>
     <script src="{{ url_for('static', filename='scripts.js') }}"></script>
 </body>

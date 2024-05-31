@@ -132,7 +132,7 @@ def dashboard():
     num_staff = Staff.query.count()
 
     upcoming_appointments = PatientSchedule.query.filter(PatientSchedule.appointment_day >= datetime.now()).order_by(PatientSchedule.appointment_day).limit(5).all()
-    upcoming_shifts = DoctorSchedule.query.filter(DoctorSchedule.start_time >= datetime.now()).order_by(DoctorSchedule.start_time).limit(5).all()
+    upcoming_shifts = DoctorSchedule.query.limit(5).all()
     recent_activities = ["Patient John Doe admitted", "Dr. Smith performed surgery", "New staff member added"]
 
     return render_template('dashboard.html', num_patients=num_patients, num_doctors=num_doctors, num_staff=num_staff,
@@ -305,7 +305,7 @@ def hire():
             position=position,
             pay=pay,
             patients_served=random.randint(90,100),
-            success_rate=round(random.uniform(90,100),2)
+            success_rate=random.randint(90,100)
         )
         db.session.add(new_doctor)
         db.session.commit()
