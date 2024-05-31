@@ -70,6 +70,7 @@ class PatientSchedule(db.Model):
     patient_id = db.Column(db.Integer, db.ForeignKey('patients.id'), nullable=False)
     appointment_day = db.Column(db.Date, nullable=False)
     appointment_time = db.Column(db.Time, nullable=False)
+    doctor_id = db.Column(db.Integer, db.ForeignKey('doctors.id'), nullable=False)
 
 
 
