@@ -3,7 +3,7 @@ HOW TO OTWORZYĆ TA STRONA:
 a) Zainstaluj pythona.
 b) Wpisz w cmd to: python -m venv myenv
 1.5 Zainstaluj wszytkie potrzebne biblioteki pythona(flask, matplotlib, decimal, sqlalchemy)
-2. Odpal w xampp MySQL, zaimportuj baze danych z tego repo.
+2. Odpal w xampp MySQL, zaimportuj baze danych z tego repo (asylum.sql).
 3. Otwórz cmd.
 4. Wpisz pushd ścieżka do folderu strony(np. pushd C:\Hospital-Management-App)
 5. Wpisz venv\Scripts\activate
