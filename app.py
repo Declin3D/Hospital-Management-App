@@ -71,6 +71,7 @@ class PatientSchedule(db.Model):
     appointment_day = db.Column(db.Date, nullable=False)
     appointment_time = db.Column(db.Time, nullable=False)
     doctor_id = db.Column(db.Integer, db.ForeignKey('doctors.id'), nullable=False)
+    reason = db.Column(db.String(100), nullable=False)
     doctor = db.relationship('Doctor', backref='patient_schedule', lazy=True)
     patient = db.relationship('Patient', backref='schedule', lazy=True)
 
@@ -257,7 +258,7 @@ names = [
     "Andrew", "Angel", "Adrian", "Cameron", "Nolan", "Waylon", "Jaxon", "Roman", "Eli", "Wesley",
     "Aaron", "Ian", "Christian", "Ryan", "Leonardo", "Brooks", "Axel", "Walker", "Jonathan", "Easton",
     "Everett", "Weston", "Bennett", "Robert", "Jameson", "Landon", "Silas", "Jose", "Beau", "Micah",
-    "Colton", "Jordan", "Jeremiah", "Parker", "Greyson", "Rowan", "Adam", "Nicholas", "Theo", "Xavier"
+    "Colton", "Jordan", "Jeremiah", "Parker", "Greyson", "Rowan", "Adam", "Nicholas", "Theo", "Xavier", "Bartosz"
 ]
 surnames = [
     "Smith", "Johnson", "Williams", "Jones", "Brown", "Davis", "Miller", "Wilson", "Moore", "Taylor",
@@ -269,7 +270,7 @@ surnames = [
     "Rivera", "Cooper", "Richardson", "Cox", "Howard", "Ward", "Torres", "Peterson", "Gray", "Ramirez",
     "James", "Watson", "Brooks", "Kelly", "Sanders", "Price", "Bennett", "Wood", "Barnes", "Ross",
     "Henderson", "Coleman", "Jenkins", "Perry", "Powell", "Long", "Patterson", "Hughes", "Flores", "Washington",
-    "Butler", "Simmons", "Foster", "Gonzales", "Bryant", "Alexander", "Russell", "Griffin", "Diaz", "Hayes"
+    "Butler", "Simmons", "Foster", "Gonzales", "Bryant", "Alexander", "Russell", "Griffin", "Diaz", "Hayes", "Wasilkowski"
 ]
 positions = [
     "Junior Doctor", "Senior Doctor", "Consultant", "Junior Resident", "Senior Resident", "Medical Director"
@@ -280,7 +281,7 @@ def generate_doctor_info():
     last_name = random.choice(surnames)
     specialization = random.choice(specializations)
     position = random.choice(positions)
-    pay = round(random.uniform(50000, 150000), 2)
+    pay = round(random.uniform(5000, 50000), 2)
     return {
         "first_name": first_name,
         "last_name": last_name,
@@ -341,7 +342,8 @@ def add_patient_schedule():
     appointment_day = request.form['appointment_day']
     appointment_time = request.form['appointment_time']
     doctor_id = request.form['doctor_id']
-    new_schedule = PatientSchedule(patient_id=patient_id, appointment_day=appointment_day, appointment_time=appointment_time, doctor_id=doctor_id)
+    reason = request.form['reason']
+    new_schedule = PatientSchedule(patient_id=patient_id, appointment_day=appointment_day, appointment_time=appointment_time, doctor_id=doctor_id, reason=reason)
     db.session.add(new_schedule)
     db.session.commit()
     return redirect(url_for('schedule'))

@@ -5,26 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patients</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="container">
         <nav class="sidebar">
             <ul>
-                <li><a href="{{ url_for('dashboard') }}" class="tab-link">Dashboard</a></li>
-                <li><a href="{{ url_for('patients') }}" class="tab-link active">Patients</a></li>
-                <li><a href="{{ url_for('doctors') }}" class="tab-link">Doctors</a></li>
-                <li><a href="{{ url_for('staff') }}" class="tab-link">Staff</a></li>
-                <li><a href="{{ url_for('hire') }}" class="tab-link">Hire</a></li>
-                <li><a href="{{ url_for('schedule') }}" class="tab-link">Schedule</a></li>
-                <li><a href="{{ url_for('resources') }}" class="tab-link">Resources</a></li>
-                <li><a href="{{ url_for('finances') }}" class="tab-link">Finances</a></li>
-                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                <li><a href="{{ url_for('dashboard') }}" class="tab-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="{{ url_for('patients') }}" class="tab-link active"><i class="fas fa-users"></i> Patients</a></li>
+                <li><a href="{{ url_for('doctors') }}" class="tab-link"><i class="fas fa-user-md"></i> Doctors</a></li>
+                <li><a href="{{ url_for('staff') }}" class="tab-link"><i class="fas fa-user-nurse"></i> Staff</a></li>
+                <li><a href="{{ url_for('hire') }}" class="tab-link"><i class="fas fa-briefcase"></i> Hire</a></li>
+                <li><a href="{{ url_for('schedule') }}" class="tab-link"><i class="fas fa-calendar-alt"></i> Schedule</a></li>
+                <li><a href="{{ url_for('resources') }}" class="tab-link"><i class="fas fa-folder-open"></i> Resources</a></li>
+                <li><a href="{{ url_for('finances') }}" class="tab-link"><i class="fas fa-dollar-sign"></i> Finances</a></li>
+                <li><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
             </ul>
         </nav>
         <div class="content">
             <div id="patients" class="tab-content active">
                 <h1>Patients</h1>
-                <table>
+                <table id="patient-table">
                     <thead>
                         <tr>
                             <th>First Name</th>
@@ -42,8 +43,8 @@
                             <td>{{ patient.last_name }}</td>
                             <td>{{ patient.disease }}</td>
                             <td>{{ patient.checked_in }}</td>
-                            <td><a href="{{ url_for('medical_history', patient_id=patient.id) }}"><button type="submit">View History</button></a></td>
-                            <td><a href="{{ url_for('release_patient', patient_id=patient.id) }}"><button type="submit">Release</button></a></td>
+                            <td><a href="{{ url_for('medical_history', patient_id=patient.id) }}"><button type="submit" style="font-size: 12pt;"><i class="fas fa-eye"></i> View History</button></a></td>
+                            <td><a href="{{ url_for('release_patient', patient_id=patient.id) }}"><button type="submit" style="font-size: 12pt;"><i class="fas fa-sign-out-alt"></i> Release</button></a></td>
                         </tr>
                         {% endfor %}
                     </tbody>
